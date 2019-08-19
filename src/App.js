@@ -1,26 +1,49 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import logo from './logo.svg';
+import PropTypes from "prop-types";
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class Post extends React.Component {
+  
+  render() {
+    return React.createElement(
+      'div',
+      {
+        className: 'post'
+      },
+      React.createElement(
+        'h2',
+        {
+          className: 'postAuthor',
+          id: this.props.id
+        },
+        this.props.user,
+        React.createElement(
+          'span',
+          {
+            className: 'postBody',
+          },
+          this.props.content
+        )
+      )
+    );
+  }
+
 }
 
-export default App;
+Post.propTypes = {
+  user: PropTypes.string.isRequired,
+  content: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
+}
+
+const App = React.createElement(Post, {
+  id: 1,
+  content: ' said: This is a post!',
+  user: 'mark'
+})
+
+ReactDOM.render(App, document.getElementById('root'));
+
+//export default Post;
